@@ -18,6 +18,9 @@ gem "concurrent-ruby", "1.3.4"
 group :development, :test do
   gem 'reline', '0.5.10'
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
+  gem "rspec-rails", "~> 6.0"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 6.0"
 end
 
 group :development do
