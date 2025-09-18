@@ -1,5 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Micropost, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { User.create!(name: "Bob", email: "bob@example.com") }
+
+  describe "バリデーション" do
+    it "content が140文字以内なら有効" do
+      micropost = Micropost.new(content: "a" * 140, user: user)
+      expect(micropost).to be_valid
+    end
+
+    it "content が141文字以上だと無効" do
+      micropost = Micropost.new(content: "a" * 141, user: user)
+      expect(micropost).not_to be_valid
+    end
+
+    it "user が紐づいていないと無効" do
+      micropost = Micropost.new(content: "Hello")
+      expect(micropost).not_to be_valid
+    end
+  end
+
+  describe "関連付け" do
+    it { is_expected.to belong_to(:user) }
+  end
 end
