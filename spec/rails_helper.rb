@@ -67,5 +67,14 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 end
 
+# spec/rails_helper.rb
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
+
 FactoryBot.definition_file_paths = [Rails.root.join("spec/factory_bot")]
 FactoryBot.find_definitions
