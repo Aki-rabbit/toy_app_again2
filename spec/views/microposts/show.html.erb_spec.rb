@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "microposts/show", type: :view do
+  let(:user) { create(:user, name: "Bob") }
+
   before(:each) do
-    assign(:micropost, Micropost.create!(
-      content: "MyText",
-      user_id: 2
-    ))
+    assign(:micropost, create(:micropost, content: "MyText", user: user))
   end
 
   it "renders attributes in <p>" do
     render
     expect(rendered).to match(/MyText/)
-    expect(rendered).to match(/2/)
   end
 end

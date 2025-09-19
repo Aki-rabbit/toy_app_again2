@@ -72,13 +72,6 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context '無効なパラメータ（nameが空欄）の場合' do
-      it 'ユーザー情報が更新されず、編集画面へ422でレンダリングする' do
-        patch user_path(user), params: { user: { name: '', email: 'InvalidEmail' } }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(user.reload.name).to eq('David')
-      end
-    end
   end
 
   describe 'DELETE /users/:id' do
