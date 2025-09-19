@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Microposts', type: :request do
   describe 'GET /microposts' do
     let!(:user) { create(:user, name: 'Alice', email: 'alice@example.com') }
-    let!(:micropost1) { create(:micropost, content: 'First post', user_id: user.id) }
-    let!(:micropost2) { create(:micropost, content: 'Second post', user_id: user.id) }
+    let!(:first_micropost) { create(:micropost, content: 'First post', user_id: user.id) }
+    let!(:second_micropost) { create(:micropost, content: 'Second post', user_id: user.id) }
 
     context 'マイクロポスト一覧ページにアクセスした場合' do
       before { get microposts_path }
@@ -15,6 +17,11 @@ RSpec.describe 'Microposts', type: :request do
 
       it 'タイトルが正しく表示されていること' do
         expect(response.body).to include('Microposts')
+      end
+
+      it 'マイクロポストの内容が表示されていること' do
+        expect(response.body).to include(first_micropost.content)
+        expect(response.body).to include(second_micropost.content)
       end
     end
   end

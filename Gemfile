@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -28,14 +30,15 @@ group :development do
   gem 'repl_type_completor', '0.1.10'
   gem 'solargraph',          '0.56.2'
   gem 'web-console',         '4.2.0'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false # Rails用
-  gem 'rubocop-rspec', require: false # RSpec用 (必要なら)
+  gem 'rubocop',               require: false
+  gem 'rubocop-rails',         require: false
+  gem 'rubocop-rspec',         require: false
+  gem 'rubocop-factory_bot',   require: false
+  gem 'rubocop-capybara',      require: false
 end
 
 group :test do
-  # CIだけMySQL
-  gem 'mysql2', '~> 0.5', platform: :ruby, require: false if ENV['CI']
+  gem 'mysql2',  '~> 0.5', require: false  # テストだけMySQL
 
   # RSpecのシステムテストで使う
   gem 'capybara',           '3.38.0'
@@ -45,3 +48,9 @@ end
 
 # Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
 # gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+
+gem 'rubocop', '~> 1.80', group: :development
+gem 'rubocop-capybara', '~> 2.22', group: :development
+gem 'rubocop-factory_bot', '~> 2.27', group: :development
+gem 'rubocop-rails', '~> 2.33', group: :development
+gem 'rubocop-rspec', '~> 3.7', group: :development

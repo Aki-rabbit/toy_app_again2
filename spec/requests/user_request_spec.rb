@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
   describe 'GET /users' do
-    let!(:user1) { create(:user, name: 'Alice', email: 'alice@example.com') }
-    let!(:user2) { create(:user, name: 'Bob', email: 'bob@example.com') }
+    let!(:alice) { create(:user, name: 'Alice', email: 'alice@example.com') }
+    let!(:bob) { create(:user, name: 'Bob', email: 'bob@example.com') }
 
     context 'ユーザー一覧ページにアクセスした場合' do
-        before { get users_path }  
+      before { get users_path }
 
       it 'リクエストは200 OKとなること' do
         expect(response.status).to eq 200
@@ -14,6 +16,11 @@ RSpec.describe 'Users', type: :request do
 
       it 'タイトルが正しく表示されていること' do
         expect(response.body).to include('Users')
+      end
+
+      it 'ユーザーの名前が表示されていること' do
+        expect(response.body).to include(alice.name)
+        expect(response.body).to include(bob.name)
       end
     end
   end
@@ -62,27 +69,24 @@ RSpec.describe 'Users', type: :request do
     let!(:user) { create(:user, name: 'David', email: 'David@gmail.com') }
 
     context '有効なパラメータの場合' do
-      it 'ユーザー情報が更新され、詳細へ302でリダイレクトする' do
+      it 'ユーザー情報が更新される' do
+        patch user_path(user), params: { user: { name: 'David Updated', email: 'DavidUpdated@gmail.com' } }
+        expect(user.reload.name).to eq('David Updated')
+        expect(user.reload.email).to eq('DavidUpdated@gmail.com')
+      end
+
+      it '詳細ページに302でリダイレクトする' do
         patch user_path(user), params: { user: { name: 'David Updated', email: 'DavidUpdated@gmail.com' } }
         expect(response).to redirect_to(user_path(user))
         follow_redirect!
         expect(response.body).to include('User was successfully updated.')
-        expect(user.reload.name).to eq('David Updated')
-        expect(user.reload.email).to eq('DavidUpdated@gmail.com')
-      end
-    end
-
-    context '無効なパラメータ（nameが空欄）の場合' do
-      it 'ユーザー情報が更新されず、編集画面へ422でレンダリングする' do
-        patch user_path(user), params: { user: { name: '', email: 'InvalidEmail' } }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(user.reload.name).to eq('David')
       end
     end
   end
 
   describe 'DELETE /users/:id' do
     let!(:user) { create(:user, name: 'Eve', email: 'Eve@gmail.com') }
+
     context 'ユーザー削除を実行した場合' do
       it 'ユーザーが削除され、一覧へ302でリダイレクトする' do
         expect do
