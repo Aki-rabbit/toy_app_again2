@@ -324,15 +324,6 @@ GEM
     rubocop-ast (1.46.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
-    rubocop-rails (2.33.3)
-      activesupport (>= 4.2.0)
-      lint_roller (~> 1.1)
-      rack (>= 1.1)
-      rubocop (>= 1.75.0, < 2.0)
-      rubocop-ast (>= 1.44.0, < 2.0)
-    rubocop-rspec (3.7.0)
-      lint_roller (~> 1.1)
-      rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     sassc (2.4.0)
@@ -451,9 +442,6 @@ DEPENDENCIES
   reline (= 0.5.10)
   repl_type_completor (= 0.1.10)
   rspec-rails (~> 6.0)
-  rubocop
-  rubocop-rails
-  rubocop-rspec
   sassc-rails (= 2.1.2)
   selenium-webdriver (= 4.8.3)
   shoulda-matchers (~> 6.0)
