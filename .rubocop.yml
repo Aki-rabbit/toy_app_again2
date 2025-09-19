@@ -1,31 +1,8 @@
-# .rubocop.yml
-plugins:
+require:
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-factory_bot
-  - rubocop-capybara
 
 AllCops:
-  NewCops: enable
   TargetRubyVersion: 3.2
   Exclude:
-    - "bin/**/*"
     - "db/schema.rb"
-    - "node_modules/**/*"
-    - "vendor/**/*"
-    - "test/**/*" # ← RSpecで行くならMinitest配下はLint除外
-    - "tmp/**/*"
-
-# RailsアプリではよくOFFにするやつ
-Style/Documentation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-# 日本語コンテキストに厳しすぎるRSpec Copをゆるめる（まずはOFFでOK）
-RSpec/ContextWording:
-  Enabled: false
-RSpec/MultipleExpectations:
-  Max: 3 # いきなり0→1はキツいので様子見で3
-RSpec/ExampleLength:
-  Max: 10
