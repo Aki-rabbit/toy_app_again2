@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'microposts/new', type: :view do
-  before(:each) do
+  before do
     assign(:micropost, Micropost.new(
                          content: 'MyText',
                          user_id: 1

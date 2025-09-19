@@ -45,3 +45,9 @@ end
 
 # Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
 # gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+
+gem 'rubocop', '~> 1.80', group: :development
+gem 'rubocop-capybara', '~> 2.22', group: :development
+gem 'rubocop-factory_bot', '~> 2.27', group: :development
+gem 'rubocop-rails', '~> 2.33', group: :development
+gem 'rubocop-rspec', '~> 3.7', group: :development

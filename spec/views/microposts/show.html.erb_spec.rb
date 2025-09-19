@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'microposts/show', type: :view do
   let(:user) { create(:user, name: 'Bob') }
 
-  before(:each) do
+  before do
     assign(:micropost, create(:micropost, content: 'MyText', user: user))
   end
 

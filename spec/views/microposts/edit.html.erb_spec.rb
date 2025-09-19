@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'microposts/edit', type: :view do
   let(:micropost) { create(:micropost) } # ← FactoryBotのmicropost（user付き）を使う
 
-  before(:each) do
+  before do
     assign(:micropost, micropost)
   end
 

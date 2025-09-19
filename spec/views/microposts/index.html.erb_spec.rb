@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'microposts/index', type: :view do
   let(:user) { create(:user, name: 'Bob') }
 
-  before(:each) do
+  before do
     assign(:microposts, create_list(:micropost, 2, content: 'MyText', user: user))
   end
 
