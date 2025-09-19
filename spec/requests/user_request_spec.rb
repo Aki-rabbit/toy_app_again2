@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
@@ -6,7 +8,7 @@ RSpec.describe 'Users', type: :request do
     let!(:user2) { create(:user, name: 'Bob', email: 'bob@example.com') }
 
     context 'ユーザー一覧ページにアクセスした場合' do
-        before { get users_path }  
+      before { get users_path }
 
       it 'リクエストは200 OKとなること' do
         expect(response.status).to eq 200
@@ -71,7 +73,6 @@ RSpec.describe 'Users', type: :request do
         expect(user.reload.email).to eq('DavidUpdated@gmail.com')
       end
     end
-
   end
 
   describe 'DELETE /users/:id' do

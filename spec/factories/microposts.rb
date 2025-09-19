@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :micropost do
-    content { "MyText" }
+    content { 'MyText' }
     association :user
   end
 end

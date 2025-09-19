@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "microposts/index", type: :view do
-  let(:user) { create(:user, name: "Bob") }
+RSpec.describe 'microposts/index', type: :view do
+  let(:user) { create(:user, name: 'Bob') }
 
   before(:each) do
-    assign(:microposts, create_list(:micropost, 2, content: "MyText", user: user))
+    assign(:microposts, create_list(:micropost, 2, content: 'MyText', user: user))
   end
 
-  it "renders a list of microposts" do
+  it 'renders a list of microposts' do
     render
     cell_selector = 'div>p'
 

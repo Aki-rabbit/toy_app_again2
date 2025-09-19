@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Micropost, type: :model do
-  let(:user){create(:user)}
+  let(:user) { create(:user) }
 
   describe 'バリデーション' do
     it 'content が140文字以内なら有効' do
