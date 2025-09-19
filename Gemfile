@@ -38,8 +38,7 @@ group :development do
 end
 
 group :test do
-  # CIだけMySQL
-  gem 'mysql2', '~> 0.5', platform: :ruby, require: false if ENV['CI']
+  gem 'mysql2',  '~> 0.5', require: false  # テストだけMySQL
 
   # RSpecのシステムテストで使う
   gem 'capybara',           '3.38.0'
