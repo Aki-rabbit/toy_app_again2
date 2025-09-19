@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-
+require 'support/factory_bot'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -67,5 +69,13 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 end
 
-FactoryBot.definition_file_paths = [Rails.root.join("spec/factory_bot")]
+# spec/rails_helper.rb
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
+FactoryBot.definition_file_paths = [Rails.root.join('spec/factory_bot')]
 FactoryBot.find_definitions

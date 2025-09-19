@@ -29,3 +29,11 @@
 
 en:
   hello: "Hello world"
+  users:
+    created: "User was successfully created."
+    updated: "User was successfully updated."
+    destroyed: "User was successfully destroyed."
+  microposts:
+    created: "Micropost was successfully created."
+    updated: "Micropost was successfully updated."
+    destroyed: "Micropost was successfully destroyed."

@@ -1,0 +1,9 @@
+{
+  "[ruby]": {
+    "editor.defaultFormatter": "rubocop.vscode-rubocop",
+    "editor.formatOnSave": true
+  },
+  "emeraldwalk.runonsave": {
+    "commands": [] // ← Docker経由の自動実行をこのプロジェクトでは無効化
+  }
+}
