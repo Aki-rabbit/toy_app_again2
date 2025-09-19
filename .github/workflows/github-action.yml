@@ -71,6 +71,8 @@ jobs:
   rubocop:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      BUNDLE_WITHOUT: "test" # ← これで :test の mysql2 を入れない
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

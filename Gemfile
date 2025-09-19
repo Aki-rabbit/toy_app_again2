@@ -30,9 +30,11 @@ group :development do
   gem 'repl_type_completor', '0.1.10'
   gem 'solargraph',          '0.56.2'
   gem 'web-console',         '4.2.0'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false # Rails用
-  gem 'rubocop-rspec', require: false # RSpec用 (必要なら)
+  gem 'rubocop',               require: false
+  gem 'rubocop-rails',         require: false
+  gem 'rubocop-rspec',         require: false
+  gem 'rubocop-factory_bot',   require: false
+  gem 'rubocop-capybara',      require: false
 end
 
 group :test do
