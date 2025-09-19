@@ -7,63 +7,46 @@ on:
 jobs:
   rspec:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 10
     services:
       mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: root # ← 明示的にパスワードを設定
-          MYSQL_DATABASE: toy_app_again2_test
+        image: mysql:8.0
         ports:
           - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
-
-    env:
-      RAILS_ENV: test
-      CI: "true"
-      # database.yml.ci が ENV を読む前提なら合わせておく
-      MYSQL_HOST: 127.0.0.1
-      MYSQL_PORT: 3306
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: toy_app_again2_test
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      # mysql2 をビルドできるように、先に入れる
-      - name: Install system deps for mysql2
-        run: sudo apt-get update && sudo apt-get install -y libmysqlclient-dev
+        uses: actions/checkout@v2
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2.9" # .ruby-version があるなら省略可
-          bundler-cache: true # ✅ これが Bundler のキャッシュを面倒見ます
+          bundler-cache: true
 
-      # Node を使わないなら Yarn 関連は削除してOK
-      # 使う場合だけ残す（キャッシュは v4 にする or 無しでも可）
-      # - name: Cache node modules
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
       - name: Yarn install
-        if: hashFiles('**/yarn.lock') != ''
         run: yarn install --check-files
 
-      - name: Database prepare
+      - name: Database create and migrate
         run: |
           cp config/database.yml.ci config/database.yml
-          bundle exec rails db:prepare
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Run rspec
         run: bundle exec rspec
@@ -73,12 +56,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2.9"
           bundler-cache: true
 
       - name: Run rubocop
