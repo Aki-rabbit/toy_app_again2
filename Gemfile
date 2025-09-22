@@ -33,16 +33,15 @@ group :development do
 
   # RuboCop 一式（1箇所に統一）
   gem 'rubocop',            '~> 1.80', require: false
+  gem 'rubocop-capybara',   '~> 2.22', require: false
+  gem 'rubocop-factory_bot', '~> 2.27', require: false
   gem 'rubocop-rails',      '~> 2.33', require: false
   gem 'rubocop-rspec',      '~> 3.7',  require: false
-  gem 'rubocop-factory_bot','~> 2.27', require: false
-  gem 'rubocop-capybara',   '~> 2.22', require: false
 end
 
 group :test do
-  gem 'mysql2',  '~> 0.5', require: false  # テストだけMySQLならこのままでOK
   gem 'capybara',           '3.38.0'
+  gem 'mysql2', '~> 0.5', require: false # テストだけMySQLならこのままでOK
   gem 'selenium-webdriver', '4.8.3'
   gem 'webdrivers',         '5.2.0'
 end
-
