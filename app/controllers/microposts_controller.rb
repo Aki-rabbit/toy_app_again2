@@ -26,7 +26,7 @@ class MicropostsController < ApplicationController
 
     respond_to do |format|
       if @micropost.save
-        format.html { redirect_to micropost_url(@micropost), notice: text('microposts.created') }
+        format.html { redirect_to micropost_url(@micropost), notice: t('microposts.created') }
         format.json { render :show, status: :created, location: @micropost }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class MicropostsController < ApplicationController
   def update
     respond_to do |format|
       if @micropost.update(micropost_params)
-        format.html { redirect_to micropost_url(@micropost), notice: text('microposts.updated') }
+        format.html { redirect_to micropost_url(@micropost), notice: t('microposts.updated') }
         format.json { render :show, status: :ok, location: @micropost }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class MicropostsController < ApplicationController
     @micropost.destroy!
 
     respond_to do |format|
-      format.html { redirect_to microposts_url, notice: text('microposts.destroyed') }
+      format.html { redirect_to microposts_url, notice: t('microposts.destroyed') }
       format.json { head :no_content }
     end
   end
