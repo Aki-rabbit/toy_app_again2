@@ -412,11 +412,11 @@ DEPENDENCIES
   reline (= 0.5.10)
   repl_type_completor (= 0.1.10)
   rspec-rails (~> 6.0)
-  rubocop
-  rubocop-capybara
-  rubocop-factory_bot
-  rubocop-rails
-  rubocop-rspec
+  rubocop (~> 1.80)
+  rubocop-capybara (~> 2.22)
+  rubocop-factory_bot (~> 2.27)
+  rubocop-rails (~> 2.33)
+  rubocop-rspec (~> 3.7)
   sassc-rails (= 2.1.2)
   selenium-webdriver (= 4.8.3)
   shoulda-matchers (~> 6.0)
