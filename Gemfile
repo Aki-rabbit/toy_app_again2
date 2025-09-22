@@ -30,27 +30,19 @@ group :development do
   gem 'repl_type_completor', '0.1.10'
   gem 'solargraph',          '0.56.2'
   gem 'web-console',         '4.2.0'
-  gem 'rubocop',               require: false
-  gem 'rubocop-rails',         require: false
-  gem 'rubocop-rspec',         require: false
-  gem 'rubocop-factory_bot',   require: false
-  gem 'rubocop-capybara',      require: false
+
+  # RuboCop 一式（1箇所に統一）
+  gem 'rubocop',            '~> 1.80', require: false
+  gem 'rubocop-rails',      '~> 2.33', require: false
+  gem 'rubocop-rspec',      '~> 3.7',  require: false
+  gem 'rubocop-factory_bot','~> 2.27', require: false
+  gem 'rubocop-capybara',   '~> 2.22', require: false
 end
 
 group :test do
-  gem 'mysql2',  '~> 0.5', require: false  # テストだけMySQL
-
-  # RSpecのシステムテストで使う
+  gem 'mysql2',  '~> 0.5', require: false  # テストだけMySQLならこのままでOK
   gem 'capybara',           '3.38.0'
   gem 'selenium-webdriver', '4.8.3'
   gem 'webdrivers',         '5.2.0'
 end
 
-# Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
-# gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-
-gem 'rubocop', '~> 1.80', group: :development
-gem 'rubocop-capybara', '~> 2.22', group: :development
-gem 'rubocop-factory_bot', '~> 2.27', group: :development
-gem 'rubocop-rails', '~> 2.33', group: :development
-gem 'rubocop-rspec', '~> 3.7', group: :development
