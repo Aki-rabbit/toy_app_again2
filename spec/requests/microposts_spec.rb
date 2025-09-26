@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 RSpec.describe 'Microposts', type: :request do
   describe 'GET /microposts' do
     let!(:user) { create(:user, name: 'Alice', email: 'alice@example.com') }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 RSpec.describe 'microposts/edit', type: :view do
   let(:micropost) { create(:micropost) } # ← FactoryBotのmicropost（user付き）を使う
 
