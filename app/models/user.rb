@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Model for users
 class User < ApplicationRecord
-    validates :name, presence: true
+  has_many :microposts, dependent: :destroy
 end

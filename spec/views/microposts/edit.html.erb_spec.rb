@@ -1,25 +1,18 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe "microposts/edit", type: :view do
-  let(:micropost) {
-    Micropost.create!(
-      content: "MyText",
-      user_id: 1
-    )
-  }
+RSpec.describe 'microposts/edit', type: :view do
+  let(:micropost) { create(:micropost) } # ← FactoryBotのmicropost（user付き）を使う
 
-  before(:each) do
+  before do
     assign(:micropost, micropost)
   end
 
-  it "renders the edit micropost form" do
+  it 'renders the edit micropost form' do
     render
 
-    assert_select "form[action=?][method=?]", micropost_path(micropost), "post" do
-
-      assert_select "textarea[name=?]", "micropost[content]"
-
-      assert_select "input[name=?]", "micropost[user_id]"
+    assert_select 'form[action=?][method=?]', micropost_path(micropost), 'post' do
+      assert_select 'textarea[name=?]', 'micropost[content]'
+      assert_select 'input[name=?]', 'micropost[user_id]'
     end
   end
 end

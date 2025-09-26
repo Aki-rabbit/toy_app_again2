@@ -1,21 +1,20 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe "microposts/new", type: :view do
-  before(:each) do
+RSpec.describe 'microposts/new', type: :view do
+  before do
     assign(:micropost, Micropost.new(
-      content: "MyText",
-      user_id: 1
-    ))
+                         content: 'MyText',
+                         user_id: 1
+                       ))
   end
 
-  it "renders new micropost form" do
+  it 'renders new micropost form' do
     render
 
-    assert_select "form[action=?][method=?]", microposts_path, "post" do
+    assert_select 'form[action=?][method=?]', microposts_path, 'post' do
+      assert_select 'textarea[name=?]', 'micropost[content]'
 
-      assert_select "textarea[name=?]", "micropost[content]"
-
-      assert_select "input[name=?]", "micropost[user_id]"
+      assert_select 'input[name=?]', 'micropost[user_id]'
     end
   end
 end

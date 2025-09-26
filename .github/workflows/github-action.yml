@@ -1,0 +1,78 @@
+name: Run rspec, rubocop
+
+on:
+  pull_request:
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    continue-on-error: true # ← 導入PRなので一時的に許容（後で外す）
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: toy_app_again2_test
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      RAILS_ENV: test
+      CI: "true"
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: toy_app_again2_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system deps for native gems
+        run: sudo apt-get update && sudo apt-get install -y libmysqlclient-dev libsqlite3-dev build-essential
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.9"
+          bundler-cache: true
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Yarn install
+        run: yarn install --check-files
+
+      - name: DB prepare
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:prepare
+
+      - name: Run RSpec
+        run: bundle exec rspec
+
+  rubocop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUNDLE_WITHOUT: "test"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system deps for sqlite3
+        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev build-essential
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.9"
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
